@@ -29,7 +29,7 @@ public class UserService {
         return repoUser.findByEmail(email);
     }
     public Optional<User> findUserByUsername(String username) {
-        return repoUser.findByEmail(username);
+        return repoUser.findByUsername(username);
     }
     public Optional<User> findUserById(Long id) {
         return repoUser.findById(id.intValue());
@@ -40,6 +40,8 @@ public class UserService {
     public List<User> findAll(){
         return repoUser.findAll();
     }
+
+
     @Transactional
     public User updateUser(Integer id, User userWithUpdates) {
         Optional<User> existingUserOpt = repoUser.findById(id);
@@ -51,11 +53,16 @@ public class UserService {
         User existingUser = existingUserOpt.get();
 
 
-        existingUser.setPassword(userWithUpdates.getPassword());
-        existingUser.setEmail(userWithUpdates.getEmail());
+//        existingUser.setPassword(userWithUpdates.getPassword());
+//        existingUser.setEmail(userWithUpdates.getEmail());
         existingUser.setUsername(userWithUpdates.getUsername());
         existingUser.setBio(userWithUpdates.getBio());
-        existingUser.setProfile_picture_url(userWithUpdates.getProfile_picture_url());
+        if (userWithUpdates.getProfile_picture_url() != null) {
+            existingUser.setProfile_picture_url(userWithUpdates.getProfile_picture_url());
+
+        }
         return repoUser.save(existingUser);
     }
+//    @Transactional
+//    public User updateUser()
 }
