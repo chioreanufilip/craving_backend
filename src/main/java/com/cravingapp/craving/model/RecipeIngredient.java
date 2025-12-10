@@ -10,7 +10,7 @@ public class RecipeIngredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
-    private Long id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name="recipe_id")
@@ -21,7 +21,7 @@ public class RecipeIngredient {
     private Ingredient ingredient;
 
     @Column
-    private int quantity;
+    private String quantity;
     @Column
     private String unit;
 }

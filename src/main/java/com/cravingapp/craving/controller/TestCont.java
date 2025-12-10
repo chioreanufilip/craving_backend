@@ -21,8 +21,8 @@ public class TestCont {
 //        return comment1.getUserId().toString();
         Comment comment = new Comment();
         comment.setContent("This is a test");
-        comment.setUserId(1);
-        comment.setRecipeId(1);
+//        comment.setUserId(1);
+//        comment.setRecipeId(1);
         commentRepo.save(comment);
 
         return "success";
