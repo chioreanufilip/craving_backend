@@ -22,7 +22,6 @@ public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     @Column(name = "comment_id")
     private Integer commentId;
 
@@ -49,12 +48,13 @@ public class Comment {
 //    public void setContent(String content) {
 //        this.content = content;
 //    }
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "user_id")
-    private Integer userId;
-
-    @Column (name = "recipe_id")
-    private Integer recipeId;
+    @ManyToOne
+    @JoinColumn(name = "recipe_id")
+    private Recipe recipe;
 
     @Column(name = "content")
     private String content;

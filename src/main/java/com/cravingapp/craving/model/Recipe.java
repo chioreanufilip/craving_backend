@@ -3,6 +3,7 @@ package com.cravingapp.craving.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -25,19 +26,27 @@ public class Recipe {
     private String title;
     @Column
     private String description;
-    @Column
-    private Integer prep_time_minutes;
-    @Column
-    private Integer cook_time_minutes;
+    @Column(name = "prep_time_minutes")
+    private Integer prepTimeMinutes;
+    @Column(name = "cook_time_minutes")
+    private Integer cookTimeMinutes;
     @Column
     private Integer servings;
-    @Column
-    private LocalDateTime created_at;
-    @OneToMany(mappedBy = "recipe_id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Media> mediaList = new ArrayList<>();
-    @OneToMany(mappedBy = "recipe_id",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<RecipeIngredient> recipeIngredients;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<Comment> comments;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
+    private List<Like> likes;
+
+    @OneToMany(mappedBy = "recipe",cascade =  CascadeType.ALL,orphanRemoval = true)
+    private List<Step> steps = new ArrayList<>();
 }
 
 
