@@ -38,17 +38,16 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Media> mediaList = new ArrayList<>();
     @OneToMany(mappedBy = "recipe",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<RecipeIngredient> recipeIngredients;
+    private List<RecipeIngredient> recipeIngredients = new ArrayList<>();
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
-    private List<Like> likes;
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "recipe",cascade =  CascadeType.ALL,orphanRemoval = true)
     private List<Step> steps = new ArrayList<>();
 }
-
 
 
 
