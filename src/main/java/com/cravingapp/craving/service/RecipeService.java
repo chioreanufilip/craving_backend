@@ -243,14 +243,19 @@ public class RecipeService {
         String avatarUrl = (recipe.getUser() != null) ? recipe.getUser().getProfile_picture_url() : null;
 
         // C. Calcule
-        int likesCount = (recipe.getLikes() != null) ? recipe.getLikes().size() : 0;
+        int likesCount = (recipe.getLikes() != null)
+                ? (int) recipe.getLikes().stream()
+                .filter(l -> l.getReactionType() == ReactionType.LIKE)
+                .count()
+                : 0;
         int commentsCount = (recipe.getComments() != null) ? recipe.getComments().size() : 0;
 
         // D. Verificăm "is_Liked"
         boolean isLikedByMe = false;
         if (currentUser != null && recipe.getLikes() != null) {
             isLikedByMe = recipe.getLikes().stream()
-                    .anyMatch(like -> like.getUser().getId().equals(currentUser.getId()));
+                    .anyMatch(like -> like.getUser().getId().equals(currentUser.getId())
+                            && like.getReactionType() == ReactionType.LIKE);
         }
 
         // E. Returnăm obiectul gata făcut
@@ -396,4 +401,3 @@ public class RecipeService {
         return recipeRepo.save(recipe);
     }
 }
-

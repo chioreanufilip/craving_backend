@@ -4,7 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "\"like\"") // "like" e cuvânt rezervat SQL, sper că tabelul se cheamă "likes"
+@Table(
+        name = "\"like\"",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "recipe_id"}),
+                @UniqueConstraint(columnNames = {"user_id", "comment_id"})
+        }
+)
 @Data
 public class Like {
     @Id
@@ -18,4 +24,12 @@ public class Like {
     @ManyToOne
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
+
+    @ManyToOne
+    @JoinColumn(name = "comment_id")
+    private Comment comment;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "reaction_type", nullable = false)
+    private ReactionType reactionType;
 }
